@@ -1,0 +1,23 @@
+{
+  "name": "udacity-assignment-8",
+  "version": "1.0.0",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "devDependencies": {
+    "node": "0.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codemansam/udacity-assignment-8.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codemansam/udacity-assignment-8/issues"
+  },
+  "homepage": "https://github.com/codemansam/udacity-assignment-8#readme",
+  "description": ""
+}
