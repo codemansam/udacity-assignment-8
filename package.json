@@ -4,6 +4,8 @@
   "main": "gulpfile.js",
   "dependencies": {},
   "devDependencies": {
+    "gulp-imagemin": "^3.2.0",
+    "imagemin-guetzli": "^0.1.5",
     "node": "0.0.0"
   },
   "scripts": {

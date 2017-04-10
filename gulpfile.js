@@ -1,7 +1,9 @@
-var gulp = require('gulp');
+const 	gulp = require('gulp'),
+		imagemin = require('gulp-imagemin');
 
-gulp.task('test', function() {
-	console.log('test');
-});
-
-gulp.task('default');
+gulp.task('images', () =>
+    gulp.src('app/images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/images'))
+);
+gulp.task('default',['images',]);
