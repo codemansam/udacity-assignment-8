@@ -1,6 +1,7 @@
 const 	gulp = require('gulp'),
 		imagemin = require('gulp-imagemin'),
-		uncss = require('gulp-uncss');
+		uncss = require('gulp-uncss'),
+		concatCss = require('gulp-concat-css');
 
 gulp.task('images', () =>
     gulp.src('app/images/*')
@@ -16,4 +17,12 @@ gulp.task('uncss', function () {
         .pipe(gulp.dest('dist/css'));
 });
 
-gulp.task('default',['images','uncss']);
+
+ 
+gulp.task('concatCss', function () {
+  return gulp.src('dist/css/*.css')
+    .pipe(concatCss("bundle.css"))
+    .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('default',['images','uncss', 'concatCss' ]);
