@@ -27,7 +27,7 @@ gulp.task('concatCss', function () {
 gulp.task('minify-css', function() {
   return gulp.src('dist/css/bundle.css')
     .pipe(cleanCSS())
-    .pipe(gulp.dest('dist/css/final'));
+    .pipe(gulp.dest('dist/css/'));
 }); 
 
 gulp.task('default',['images','uncss', 'concatCss' ]);
