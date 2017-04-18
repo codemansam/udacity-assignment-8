@@ -2,7 +2,8 @@ const 	gulp = require('gulp'),
 		imagemin = require('gulp-imagemin'),
 		uncss = require('gulp-uncss'),
 		cleanCSS = require('gulp-clean-css'),
-		concatCss = require('gulp-concat-css');
+		concatCss = require('gulp-concat-css'),
+		minify = require('gulp-minify');
 
 gulp.task('images', () =>
     gulp.src('app/images/*')
@@ -28,6 +29,19 @@ gulp.task('minify-css', function() {
   return gulp.src('dist/css/bundle.css')
     .pipe(cleanCSS())
     .pipe(gulp.dest('dist/css/'));
+});
+ 
+gulp.task('minify-js', function() {
+  gulp.src('app/js/*.js')
+    .pipe(minify({
+        ext:{
+            src:'-debug.js',
+            min:'.js'
+        },
+        exclude: ['tasks'],
+        ignoreFiles: ['.combo.js', '-min.js']
+    }))
+    .pipe(gulp.dest('dist/js'))
 }); 
 
-gulp.task('default',['images','uncss', 'concatCss' ]);
+gulp.task('default',['uncss', 'concatCss', 'minify-css' ]);
