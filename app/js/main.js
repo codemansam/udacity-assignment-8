@@ -504,10 +504,25 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5)); // original line inside loop
+
+  //Logs show there are only 5 possible values for each scroll event.  Rather than
+  //recalculating them incessantly we can store them in an array outside the loop.
+
+  var phases = [Math.sin((document.body.scrollTop / 1250) + 0),
+                Math.sin((document.body.scrollTop / 1250) + 1),
+                Math.sin((document.body.scrollTop / 1250) + 2),
+                Math.sin((document.body.scrollTop / 1250) + 3),
+                Math.sin((document.body.scrollTop / 1250) + 4)];
+
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
+    phase = phases[i % 5];
+    //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
+    //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
+
+    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';
+    console.log(phases[i]);
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
