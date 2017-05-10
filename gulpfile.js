@@ -4,6 +4,7 @@ const 	gulp = require('gulp'),
 		cleanCSS = require('gulp-clean-css'),
 		concatCss = require('gulp-concat-css'),
 		minify = require('gulp-minify');
+    var throttle = require('lodash.throttle');
 
 gulp.task('images', () =>
     gulp.src('app/images/*')

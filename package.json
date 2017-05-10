@@ -2,7 +2,9 @@
   "name": "udacity-assignment-8",
   "version": "1.0.0",
   "main": "gulpfile.js",
-  "dependencies": {},
+  "dependencies": {
+    "lodash.throttle": "^4.1.1"
+  },
   "devDependencies": {
     "gulp-clean-css": "^3.0.4",
     "gulp-concat-css": "^2.3.0",
