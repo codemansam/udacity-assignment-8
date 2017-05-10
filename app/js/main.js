@@ -520,9 +520,8 @@ function updatePositions() {
     phase = phases[i % 5];
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
-
-    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';
-    console.log(phases[i]);
+    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance
+    //console.log(phases[i]);
   }
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -542,7 +541,7 @@ window.addEventListener('scroll', updatePositions);
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 50; i++) {  // Reduced number of pizzas created from 200 to 50
+  for (var i = 0; i < 35; i++) {  // Reduced number of pizzas created from 200 to 50
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -554,3 +553,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   updatePositions();
 });
+
