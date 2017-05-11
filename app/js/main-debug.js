@@ -461,16 +461,17 @@ var resizePizzas = function(size) {
       //TO DO choose each pizzaContainer somehow and set it's width
       container[i].style.width = newWidth;
       console.log(newWidth);
+      console.log(dx);
     }
   }
 
   changePizzaSizes(size);
 
   // User Timing API is awesome
-  window.performance.mark("mark_end_resize");
-  window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
-  var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
-  console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
+  //window.performance.mark("mark_end_resize");
+  //window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
+  //var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
+  //console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
