@@ -451,11 +451,16 @@ var resizePizzas = function(size) {
   // Changed selector to use getElementsByClassName instead of querySelectorAll
   function changePizzaSizes(size) {
 
+    // Since we want all the widths to be the same we can calculate the 0th width and use it inside 
+    // the loop for all rather than recalculating it for each randomPizzaContainer.
+    var container = document.querySelectorAll(".randomPizzaContainer");
+    var dx = determineDx(container[0], size);
 
     for (var i = 0; i < document.getElementsByClassName(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.getElementsByClassName(".randomPizzaContainer")[i], size);
-      var newwidth = (document.getElementsByClassName(".randomPizzaContainer")[0].offsetWidth + dx) + 'px';
-      document.getElementsByClassName(".randomPizzaContainer")[i].style.width = newwidth;
+    var newWidth = (container.offsetWidth[i] + dx) + 'px';
+      //TO DO choose each pizzaContainer somehow and set it's width
+      container[i].style.width = newWidth;
+      console.log(newWidth);
     }
   }
 
