@@ -450,11 +450,11 @@ var resizePizzas = function(size) {
   // Iterates through pizza elements on the page and changes their widths
   // Changed selector to use getElementsByClassName instead of querySelectorAll
   function changePizzaSizes(size) {
-    var newwidth = (document.getElementsByClassName(".randomPizzaContainer")[0].offsetWidth + dx) + 'px';
+
 
     for (var i = 0; i < document.getElementsByClassName(".randomPizzaContainer").length; i++) {
       var dx = determineDx(document.getElementsByClassName(".randomPizzaContainer")[i], size);
-      
+      var newwidth = (document.getElementsByClassName(".randomPizzaContainer")[0].offsetWidth + dx) + 'px';
       document.getElementsByClassName(".randomPizzaContainer")[i].style.width = newwidth;
     }
   }
@@ -507,7 +507,7 @@ function updatePositions() {
   //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5)); // original line inside loop
 
   //Logs show there are only 5 possible values for each scroll event.  Rather than
-  //recalculating them incessantly we can store them in an array outside the loop.
+  //recalculating them unnecessarily we can store them in an array outside the loop.
 
   var phases = [Math.sin((document.body.scrollTop / 1250) + 0),
                 Math.sin((document.body.scrollTop / 1250) + 1),
@@ -520,9 +520,8 @@ function updatePositions() {
     phase = phases[i % 5];
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
-    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance
-    //console.log(phases[i]);
-  }
+    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
+  }                                                                     
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -535,8 +534,8 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-//window.addEventListener('scroll', updatePositions); // original
-jQuery(window).on('scroll', _.throttle(updatePositions, 25));
+// Added throttling to stop scoll triggering updatePositions too often.
+jQuery(window).on('scroll', _.throttle(updatePositions, 30));
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
