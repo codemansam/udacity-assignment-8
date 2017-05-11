@@ -448,21 +448,19 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
-  // Changed selector to use getElementsByClassName instead of querySelectorAll
+  //Changed selector to use getElementsByClassName instead of querySelectorAll
+
   function changePizzaSizes(size) {
+    var i = 0;
+    var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+    var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+    var allPizza = document.querySelectorAll(".randomPizzaContainer");
 
-    // Since we want all the widths to be the same we can calculate the 0th width and use it inside 
-    // the loop for all rather than recalculating it for each randomPizzaContainer
-    var container = document.querySelectorAll(".randomPizzaContainer");
-    var dx = determineDx(container[0], size);
-
-    for (var i = 0; i < document.getElementsByClassName(".randomPizzaContainer").length; i++) {
-    var newWidth = (container.offsetWidth[i] + dx) + 'px';
-      //TO DO choose each pizzaContainer somehow and set it's width
-      container[i].style.width = newWidth;
-      console.log(newWidth);
+    for (var i = 0; i < allPizza.length; i++) {
+      allPizza[i].style.width = newwidth;
     }
   }
+
 
   changePizzaSizes(size);
 
@@ -500,6 +498,16 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   }
   console.log("Average scripting time to generate last 10 frames: " + sum / 10 + "ms");
 }
+
+var drawing = false;
+
+function restrictUpdatePositions() {
+  if(!drawing) {
+    drawing = true;
+    requestAnimationFrame(updatePositions);
+  }
+}
+
 
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
