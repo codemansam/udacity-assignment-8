@@ -27,7 +27,7 @@ gulp.task('minify-css', function() {
 });
  
 gulp.task('minify-js', function() {
-  gulp.src('app/js/*.js')
+  gulp.src('app/js/final.js')
     .pipe(minify({
         ext:{
             src:'-debug.js',
@@ -37,6 +37,12 @@ gulp.task('minify-js', function() {
         ignoreFiles: ['.combo.js']
     }))
     .pipe(gulp.dest('dist/js'))
+});
+
+gulp.task('concatJS', function() {
+  return gulp.src('app/js/*debug.js')
+    .pipe(concat('final.js'))
+    .pipe(gulp.dest('app/js'));
 }); 
 
 gulp.task('default',['uncss', 'concatCss', 'minify-css' ]);
