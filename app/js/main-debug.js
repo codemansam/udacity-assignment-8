@@ -538,9 +538,9 @@ function updatePositions() {
   }
 }
 
-// runs updatePositions on scroll
+// runs restrictUpdatePositions on scroll which 
 // Added throttling to stop scoll triggering updatePositions too often.
-jQuery(window).on('scroll', _.throttle(updatePositions, 30));
+window.addEventListener('scroll', restrictUpdatePositions);
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
@@ -559,3 +559,11 @@ document.addEventListener('DOMContentLoaded', function() {
   updatePositions();
 });
 
+var drawing = false;
+
+function restrictUpdatePositions() {
+  if(!drawing) {
+    drawing = true;
+    requestAnimationFrame(updatePositions);
+  }
+}
