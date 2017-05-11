@@ -452,7 +452,7 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
 
     // Since we want all the widths to be the same we can calculate the 0th width and use it inside 
-    // the loop for all rather than recalculating it for each randomPizzaContainer.
+    // the loop for all rather than recalculating it for each randomPizzaContainer
     var container = document.querySelectorAll(".randomPizzaContainer");
     var dx = determineDx(container[0], size);
 

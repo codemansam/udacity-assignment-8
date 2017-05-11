@@ -448,11 +448,19 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
+  // Changed selector to use getElementsByClassName instead of querySelectorAll
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+
+    // Since we want all the widths to be the same we can calculate the 0th width and use it inside 
+    // the loop for all rather than recalculating it for each randomPizzaContainer
+    var container = document.querySelectorAll(".randomPizzaContainer");
+    var dx = determineDx(container[0], size);
+
+    for (var i = 0; i < document.getElementsByClassName(".randomPizzaContainer").length; i++) {
+    var newWidth = (container.offsetWidth[i] + dx) + 'px';
+      //TO DO choose each pizzaContainer somehow and set it's width
+      container[i].style.width = newWidth;
+      console.log(newWidth);
     }
   }
 
@@ -501,11 +509,24 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
+  //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5)); // original line inside loop
+
+  //Logs show there are only 5 possible values for each scroll event.  Rather than
+  //recalculating them unnecessarily we can store them in an array outside the loop.
+
+  var phases = [Math.sin((document.body.scrollTop / 1250) + 0),
+                Math.sin((document.body.scrollTop / 1250) + 1),
+                Math.sin((document.body.scrollTop / 1250) + 2),
+                Math.sin((document.body.scrollTop / 1250) + 3),
+                Math.sin((document.body.scrollTop / 1250) + 4)];
+
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
-    items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
-  }
+    phase = phases[i % 5];
+    //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
+    //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
+    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
+  }                                                                     
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
   // Super easy to create custom metrics.
@@ -518,13 +539,14 @@ function updatePositions() {
 }
 
 // runs updatePositions on scroll
-window.addEventListener('scroll', updatePositions);
+// Added throttling to stop scoll triggering updatePositions too often.
+jQuery(window).on('scroll', _.throttle(updatePositions, 30));
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+  for (var i = 0; i < 35; i++) {  // Reduced number of pizzas created from 200 to 50
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
@@ -536,3 +558,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   updatePositions();
 });
+

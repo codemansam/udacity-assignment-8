@@ -1,16 +1,9 @@
 const 	gulp = require('gulp'),
-		imagemin = require('gulp-imagemin'),
 		uncss = require('gulp-uncss'),
 		cleanCSS = require('gulp-clean-css'),
 		concatCss = require('gulp-concat-css'),
 		minify = require('gulp-minify');
     var throttle = require('lodash.throttle');
-
-gulp.task('images', () =>
-    gulp.src('app/images/*')
-        .pipe(imagemin())
-        .pipe(gulp.dest('dist/images'))
-);
  
 gulp.task('uncss', function () {
     return gulp.src('app/css/*')
@@ -40,7 +33,7 @@ gulp.task('minify-js', function() {
             min:'.js'
         },
         exclude: ['tasks'],
-        ignoreFiles: ['.combo.js', '-min.js']
+        ignoreFiles: ['.combo.js']
     }))
     .pipe(gulp.dest('dist/js'))
 }); 
