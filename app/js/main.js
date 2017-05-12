@@ -521,12 +521,18 @@ function updatePositions() {
                 Math.sin((document.body.scrollTop / 1250) + 3),
                 Math.sin((document.body.scrollTop / 1250) + 4)];
 
+                console.log(Math.sin((document.body.scrollTop / 1250) + 0));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 1));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 2));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 3));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 4));
+
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     phase = phases[i % 5];
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
-    items[i].style.transform = 'translate3d(' + (100 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
+    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
   }                                                                     
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -550,7 +556,7 @@ function onScroll() {
 
   var currentY = window.scrollY;
   console.log(currentY);
-  if (currentY >= compareY + 20 || currentY <= compareY - 20) {
+  if (currentY >= compareY + 15 || currentY <= compareY - 15) {
     compareY = currentY;
     requestAnimate();
   }
@@ -580,7 +586,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  updatePositions();
 });
 
 
