@@ -526,7 +526,7 @@ function updatePositions() {
     phase = phases[i % 5];
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
-    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
+    items[i].style.transform = 'translate3d(' + (100 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
   }                                                                     
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -538,30 +538,33 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
+
+// Uncoupled 'scroll' from animation.  Now onScroll keeps track and then triggers requestAnimate 
+
 window.addEventListener('scroll', onScroll);
 
 var compareY = 0;
 var currentY = 0;
 
 function onScroll() {
-  console.log("compareY " +compareY);
 
   var currentY = window.scrollY;
   console.log(currentY);
-  if (currentY >= compareY + 10 || currentY <= compareY - 10) {
+  if (currentY >= compareY + 20 || currentY <= compareY - 20) {
     compareY = currentY;
     requestAnimate();
   }
 }
 
+// requestAnimate uses requestAnimationFrame to run updatePositions efficiently and 
+// thanks to onScroll is firing way less often.  Scrolls smooth and much more performant.
+
 function requestAnimate() {
-  console.log("currentY = " + currentY); //not showing up.. requestAnimate not being triggered?  IM BEING TRIGGERED THOUGH!
-  console.log("compareY = " + compareY);
+  //console.log("currentY = " + currentY);
+  //console.log("compareY = " + compareY);
   requestAnimationFrame(updatePositions);
 }
-// runs restrictUpdatePositions on scroll which 
-// Added throttling to stop scoll triggering updatePositions too often.
-//window.addEventListener('scroll', updatePositions());
+
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
