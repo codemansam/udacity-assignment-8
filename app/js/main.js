@@ -499,14 +499,7 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   console.log("Average scripting time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
-var drawing = false;
 
-function restrictUpdatePositions() {
-  if(!drawing) {
-    drawing = true;
-    requestAnimationFrame(updatePositions);
-  }
-}
 
 
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
@@ -545,10 +538,30 @@ function updatePositions() {
     logAverageFrame(timesToUpdatePosition);
   }
 }
+window.addEventListener('scroll', onScroll);
 
+var compareY = 0;
+var currentY = 0;
+
+function onScroll() {
+  console.log("compareY " +compareY);
+
+  var currentY = window.scrollY;
+  console.log(currentY);
+  if (currentY >= compareY + 10 || currentY <= compareY - 10) {
+    compareY = currentY;
+    requestAnimate();
+  }
+}
+
+function requestAnimate() {
+  console.log("currentY = " + currentY); //not showing up.. requestAnimate not being triggered?  IM BEING TRIGGERED THOUGH!
+  console.log("compareY = " + compareY);
+  requestAnimationFrame(updatePositions);
+}
 // runs restrictUpdatePositions on scroll which 
 // Added throttling to stop scoll triggering updatePositions too often.
-window.addEventListener('scroll', restrictUpdatePositions());
+//window.addEventListener('scroll', updatePositions());
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
@@ -567,11 +580,4 @@ document.addEventListener('DOMContentLoaded', function() {
   updatePositions();
 });
 
-var drawing = false;
 
-function restrictUpdatePositions() {
-  if(!drawing) {
-    drawing = true;
-    requestAnimationFrame(updatePositions);
-  }
-}
