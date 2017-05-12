@@ -448,30 +448,27 @@ var resizePizzas = function(size) {
   }
 
   // Iterates through pizza elements on the page and changes their widths
-  // Changed selector to use getElementsByClassName instead of querySelectorAll
+  //Changed selector to use getElementsByClassName instead of querySelectorAll
+
   function changePizzaSizes(size) {
+    var i = 0;
+    var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
+    var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
+    var allPizza = document.querySelectorAll(".randomPizzaContainer");
 
-    // Since we want all the widths to be the same we can calculate the 0th width and use it inside 
-    // the loop for all rather than recalculating it for each randomPizzaContainer
-    var container = document.querySelectorAll(".randomPizzaContainer");
-    var dx = determineDx(container[0], size);
-
-    for (var i = 0; i < document.getElementsByClassName(".randomPizzaContainer").length; i++) {
-    var newWidth = (container.offsetWidth[i] + dx) + 'px';
-      //TO DO choose each pizzaContainer somehow and set it's width
-      container[i].style.width = newWidth;
-      console.log(newWidth);
-      console.log(dx);
+    for (var i = 0; i < allPizza.length; i++) {
+      allPizza[i].style.width = newwidth;
     }
   }
+
 
   changePizzaSizes(size);
 
   // User Timing API is awesome
-  //window.performance.mark("mark_end_resize");
-  //window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
-  //var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
-  //console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
+  window.performance.mark("mark_end_resize");
+  window.performance.measure("measure_pizza_resize", "mark_start_resize", "mark_end_resize");
+  var timeToResize = window.performance.getEntriesByName("measure_pizza_resize");
+  console.log("Time to resize pizzas: " + timeToResize[timeToResize.length-1].duration + "ms");
 };
 
 window.performance.mark("mark_start_generating"); // collect timing data
@@ -502,6 +499,9 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
   console.log("Average scripting time to generate last 10 frames: " + sum / 10 + "ms");
 }
 
+
+
+
 // The following code for sliding background pizzas was pulled from Ilya's demo found at:
 // https://www.igvita.com/slides/2012/devtools-tips-and-tricks/jank-demo.html
 
@@ -521,6 +521,12 @@ function updatePositions() {
                 Math.sin((document.body.scrollTop / 1250) + 3),
                 Math.sin((document.body.scrollTop / 1250) + 4)];
 
+                console.log(Math.sin((document.body.scrollTop / 1250) + 0));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 1));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 2));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 3));
+                console.log(Math.sin((document.body.scrollTop / 1250) + 4));
+
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     phase = phases[i % 5];
@@ -539,9 +545,32 @@ function updatePositions() {
   }
 }
 
-// runs debounceUpdatePositions on scroll which debounces updatePositions
-// to convenient requestAnimationFrame timings.
-window.addEventListener('scroll', debounceUpdatePositions);
+// Uncoupled 'scroll' from animation.  Now onScroll keeps track and then triggers requestAnimate 
+
+window.addEventListener('scroll', onScroll);
+
+var compareY = 0;
+var currentY = 0;
+
+function onScroll() {
+
+  var currentY = window.scrollY;
+  console.log(currentY);
+  if (currentY >= compareY + 15 || currentY <= compareY - 15) {
+    compareY = currentY;
+    requestAnimate();
+  }
+}
+
+// requestAnimate uses requestAnimationFrame to run updatePositions efficiently and 
+// thanks to onScroll is firing way less often.  Scrolls smooth and much more performant.
+
+function requestAnimate() {
+  //console.log("currentY = " + currentY);
+  //console.log("compareY = " + compareY);
+  requestAnimationFrame(updatePositions);
+}
+
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
@@ -557,18 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
-  updatePositions();
+  requestAnimate();
 });
 
-// Used https://www.html5rocks.com/en/tutorials/speed/animations/ guide
-// to get scroll to debounce the updatePositions function.  Now it triggers on
-// scroll events when requestAnimationFrame chooses.
 
-var animating = false;
-
-function debounceUpdatePositions() {
-  if(!animating) {
-    animating = true;
-    requestAnimationFrame(updatePositions);
-  }
-}

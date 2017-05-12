@@ -27,7 +27,7 @@ gulp.task('minify-css', function() {
 });
  
 gulp.task('minify-js', function() {
-  gulp.src('app/js/final.js')
+  gulp.src('app/js/main.js')
     .pipe(minify({
         ext:{
             src:'-debug.js',
