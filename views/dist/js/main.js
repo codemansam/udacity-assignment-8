@@ -573,6 +573,8 @@ function requestAnimate() {
 
 
 // Generates the sliding pizzas when the page loads.
+// Uses the screen height and width to determine an efficient number 
+// of pizzas to generate.
 document.addEventListener('DOMContentLoaded', function() {
   var screenWidth = screen.width;
   var screenHeight = screen.height;
@@ -584,7 +586,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('screen width ' + screenWidth);
   console.log('total pizzas ' + totalPizzas);
   var s = 256;
-  for (var i = 0; i < totalPizzas; i++) {  // Reduced number of pizzas created from 200 to 50
+  for (var i = 0; i < totalPizzas; i++) {  // Now uses generated value rather than static.
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
