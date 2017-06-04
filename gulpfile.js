@@ -5,23 +5,24 @@
 	var	minify = require('gulp-minify');
     var throttle = require('lodash.throttle');
     var concat = require('gulp-concat');
+    var imagemin = require('gulp-imagemin');
  
 gulp.task('uncss', function () {
     return gulp.src('app/css/*')
         .pipe(uncss({
             html: ['app/pizza.html']
         }))
-        .pipe(gulp.dest('dist/css'));sudpo 
+        .pipe(gulp.dest('app/css')); 
 });
 
 gulp.task('concatCss', function () {
-  return gulp.src('dist/css/*.css')
+  return gulp.src('app/css/*.css')
     .pipe(concatCss("bundle.css"))
-    .pipe(gulp.dest('dist/css'));
+    .pipe(gulp.dest('app/css'));
 });
  
 gulp.task('minify-css', function() {
-  return gulp.src('dist/css/bundle.css')
+  return gulp.src('app/css/bundle.css')
     .pipe(cleanCSS())
     .pipe(gulp.dest('dist/css/'));
 });
@@ -43,6 +44,12 @@ gulp.task('concatJS', function() {
   return gulp.src('app/js/*debug.js')
     .pipe(concat('final.js'))
     .pipe(gulp.dest('app/js'));
-}); 
+});
 
-gulp.task('default',['uncss', 'concatCss', 'minify-css' ]);
+gulp.task('images', () =>
+    gulp.src('app/images/*')
+        .pipe(imagemin())
+        .pipe(gulp.dest('dist/images'))
+); 
+
+//gulp.task('default',['uncss', 'concatCss', 'minify-css' ]);
