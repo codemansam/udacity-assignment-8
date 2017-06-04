@@ -510,20 +510,21 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  //var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5)); // original line inside loop
-
-  //Logs show there are only 5 possible values for each scroll event.  Rather than
-  //recalculating them unnecessarily we can store them in an array outside the loop.
-
-  var phases = [Math.sin((document.body.scrollTop / 1250) + 0),
-                Math.sin((document.body.scrollTop / 1250) + 1),
-                Math.sin((document.body.scrollTop / 1250) + 2),
-                Math.sin((document.body.scrollTop / 1250) + 3),
-                Math.sin((document.body.scrollTop / 1250) + 4)];
+  // Logs show there are only 5 possible values for each scroll event.  Rather than
+  // recalculating them unnecessarily we can store them in an array outside the loop.
+  // Made phase to store document.body.scrollTop to reduce number of times it is calculated.
+  var phase =  (document.body.scrollTop / 1250);
+  // phases array stores the phases values outside of loop so they need not be calculated over and over.
+  var phases = [Math.sin(phase),
+  				Math.sin(phase + 1), 
+  				Math.sin(phase + 2),
+  				Math.sin(phase + 3),
+  				Math.sin(phase + 4)];
 
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     phase = phases[i % 5];
+    //console.log(phase)
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
     items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
@@ -549,7 +550,6 @@ var currentY = 0;
 function onScroll() {
 
   var currentY = window.scrollY;
-  console.log(currentY);
   if (currentY >= compareY + 15 || currentY <= compareY - 15) {
     compareY = currentY;
     requestAnimate();
