@@ -38,6 +38,7 @@ Navigate to views/dist/pizza.html.
 - Used style.transform: translateX (main.js 534). 
 - Uncoupled updatePositions from scroll event.  Instead made Function onScroll (main.js 534) to keep track of mouse scrolling and use it to call requestAnimate (main.js 567) much less often than it was originally.  This function was then using requestAnimationFrame for even better efficiency.  Now updatePositions runs less often and when it does run it does so when it is efficient for the browswer to do so.
 - Used screen.height and screen.width to create an appropriate number of pizzas depending on the screen size.
+
 # HTML
 
 - Inlined concatenated and minified css.
