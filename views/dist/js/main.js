@@ -576,9 +576,9 @@ document.addEventListener('DOMContentLoaded', function() {
   var rows = screenHeight / 256;
   var totalPizzas = rows * cols;
 
-  console.log('screen height ' + screenHeight);
-  console.log('screen width ' + screenWidth);
-  console.log('total pizzas ' + totalPizzas);
+  // console.log('screen height ' + screenHeight);
+  // console.log('screen width ' + screenWidth);
+  // console.log('total pizzas ' + totalPizzas);
   var s = 256;
   for (var i = 0; i < totalPizzas; i++) {  // Now uses generated value rather than static.
     var elem = document.createElement('img');
