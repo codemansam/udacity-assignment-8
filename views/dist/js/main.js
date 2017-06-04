@@ -527,7 +527,7 @@ function updatePositions() {
     //console.log(phase)
     //items[i].style.left = items[i].basicLeft + 100 * phase + 'px';  //original line don't break!
     //items[i].style.left = items[i].basicLeft + 300 * (phases[i] + i % 5) + 'px';
-    items[i].style.transform = 'translate3d(' + (500 * phase)+ 'px, 0, 0)';  //Used transform/translate3d for better performance.
+    items[i].style.transform = 'translateX(' + 100 * phase + 'px)'; // Used translateX for better performance 
   }                                                                     
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -587,7 +587,8 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+    elem.style.left = (i % cols) * s + 'px'; // added this line to make the layout work with translateX
+    elem.style.top = (Math.floor(i / cols) * s) + 'px'; 
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
   requestAnimate();
