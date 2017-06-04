@@ -521,12 +521,6 @@ function updatePositions() {
                 Math.sin((document.body.scrollTop / 1250) + 3),
                 Math.sin((document.body.scrollTop / 1250) + 4)];
 
-                console.log(Math.sin((document.body.scrollTop / 1250) + 0));
-                console.log(Math.sin((document.body.scrollTop / 1250) + 1));
-                console.log(Math.sin((document.body.scrollTop / 1250) + 2));
-                console.log(Math.sin((document.body.scrollTop / 1250) + 3));
-                console.log(Math.sin((document.body.scrollTop / 1250) + 4));
-
   var items = document.querySelectorAll('.mover');
   for (var i = 0; i < items.length; i++) {
     phase = phases[i % 5];
