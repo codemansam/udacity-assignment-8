@@ -1,19 +1,12 @@
     var	gulp = require('gulp');
-	var	uncss = require('gulp-uncss');
-	var	cleanCSS = require('gulp-clean-css');
 	var	concatCss = require('gulp-concat-css');
 	var	minify = require('gulp-minify');
-    var throttle = require('lodash.throttle');
     var concat = require('gulp-concat');
     var imagemin = require('gulp-imagemin');
+    var htmlmin = require('gulp-htmlmin');
+    var ngrok = require('ngrok');
+    var cleanCSS = require('gulp-clean-css');
  
-gulp.task('uncss', function () {
-    return gulp.src('app/css/*')
-        .pipe(uncss({
-            html: ['app/pizza.html']
-        }))
-        .pipe(gulp.dest('app/css')); 
-});
 
 gulp.task('concatCss', function () {
   return gulp.src('app/css/*.css')
@@ -21,10 +14,16 @@ gulp.task('concatCss', function () {
     .pipe(gulp.dest('app/css'));
 });
  
+//gulp.task('minify-css', function() {
+//  return gulp.src('app/css/bundle.css')
+//    .pipe(cleanCSS())
+//    .pipe(gulp.dest('dist/css/'));
+//});
+
 gulp.task('minify-css', function() {
-  return gulp.src('app/css/bundle.css')
+  return gulp.src('css/style.css')
     .pipe(cleanCSS())
-    .pipe(gulp.dest('dist/css/'));
+    .pipe(gulp.dest('css'));
 });
  
 gulp.task('minify-js', function() {
@@ -40,16 +39,10 @@ gulp.task('minify-js', function() {
     .pipe(gulp.dest('dist/js'))
 });
 
-gulp.task('concatJS', function() {
-  return gulp.src('app/js/*debug.js')
-    .pipe(concat('final.js'))
-    .pipe(gulp.dest('app/js'));
+
+gulp.task('minifyHTML', function() {
+  return gulp.src('view/app/pizza.html')
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(gulp.dest('view/dist'));
 });
-
-gulp.task('images', () =>
-    gulp.src('app/images/*')
-        .pipe(imagemin())
-        .pipe(gulp.dest('dist/images'))
-); 
-
 //gulp.task('default',['uncss', 'concatCss', 'minify-css' ]);

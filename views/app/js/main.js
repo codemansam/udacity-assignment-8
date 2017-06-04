@@ -574,9 +574,17 @@ function requestAnimate() {
 
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
-  var cols = 8;
+  var screenWidth = screen.width;
+  var screenHeight = screen.height;
+  var cols = screenWidth / 256;
+  var rows = screenHeight / 256;
+  var totalPizzas = rows * cols;
+
+  console.log('screen height ' + screenHeight);
+  console.log('screen width ' + screenWidth);
+  console.log('total pizzas ' + totalPizzas);
   var s = 256;
-  for (var i = 0; i < 35; i++) {  // Reduced number of pizzas created from 200 to 50
+  for (var i = 0; i < totalPizzas; i++) {  // Reduced number of pizzas created from 200 to 50
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";

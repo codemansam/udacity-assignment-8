@@ -1,6 +1,7 @@
 /** {
   outline: 1px solid red !important;
 }*/
+
 * {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -33,7 +34,7 @@ form {
   position: fixed;
   width: 256px;
   z-index: -1;
-  backface-visibility: hidden;
+  backface-visibility: hidden; /*added this attribute since we won't be flipping this element */
 }
 
 .randomPizzaContainer {
