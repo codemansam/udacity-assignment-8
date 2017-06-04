@@ -580,6 +580,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // console.log('screen width ' + screenWidth);
   // console.log('total pizzas ' + totalPizzas);
   var s = 256;
+  var pizzaSelector = document.querySelector("#movingPizzas1");
   for (var i = 0; i < totalPizzas; i++) {  // Now uses generated value rather than static.
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -589,7 +590,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.basicLeft = (i % cols) * s;
     elem.style.left = (i % cols) * s + 'px'; // added this line to make the layout work with translateX
     elem.style.top = (Math.floor(i / cols) * s) + 'px'; 
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    pizzaSelector.appendChild(elem);
   }
   requestAnimate();
 });
